@@ -13,6 +13,8 @@ python manage.py startapp common
 
 get-ChildItem common
 
+New-Item common/utils.py -ItemType File
+
 psql --version
 
 pip install psycopg[binary]
