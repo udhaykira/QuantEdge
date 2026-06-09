@@ -13,6 +13,20 @@ python manage.py startapp common
 
 get-ChildItem common
 
+New-Item common/utils.py -ItemType File
+
+git add .
+
+git commit -m "message"
+
+git push origin branch_name
+
+git checkout -b branch_name
+
+git diff branch1 branch2 --stat
+
+git ls-tree --name-only -r branch_name
+
 psql --version
 
 pip install psycopg[binary]
