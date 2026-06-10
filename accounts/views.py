@@ -26,5 +26,34 @@ def register(request):
         status=201,
     )
 
+@csrf_exempt
+def login(request):
+    
+    if request.method!="POST":
+        return JsonResponse(
+            {
+                'message':'Invalid Request Method'
+            },
+            status=405,
+        )
+    
+    data = json.loads(request.body)
+    user = UserService.login(data)
+    if user is None:
+        return JsonResponse(
+            {
+            "message":"Invalid Credentials"
+            },
+            status=401
+        )
+    
+    return JsonResponse(
+        {
+            "message":"Login Successful",
+            "id":user.id,
+            "username":user.username
+        },
+        status=200
+    )
     
 
