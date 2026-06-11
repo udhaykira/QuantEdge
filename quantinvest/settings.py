@@ -32,7 +32,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#Rest Framework Configuration
+REST_FRAMEWORK = {
 
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+
+    ),
+
+}
 # Application definition
 
 INSTALLED_APPS = [
@@ -49,6 +58,7 @@ INSTALLED_APPS = [
     'watchlist',
     'alerts',
     'research',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
