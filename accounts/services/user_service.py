@@ -20,4 +20,14 @@ class UserService:
         )
 
         return user
+
+    @staticmethod
+    def get_profile(user):
+        return {
+            "id":user.id,
+            "username":user.username,
+            "email":user.email,
+            "phone_number":user.phone_number,
+            "is_verified":user.is_verified,
+        }
     
