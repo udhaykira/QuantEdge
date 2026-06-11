@@ -2,6 +2,12 @@ from django.shortcuts import render
 from accounts.services.user_service import UserService
 from accounts.services.jwt_service import JWTService
 from django.http import JsonResponse
+from rest_framework.decorators import (
+    api_view,
+    permission_classes,
+)
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 import json
 from django.views.decorators.csrf import csrf_exempt
 
@@ -58,9 +64,19 @@ def login(request):
 
             },
             "refresh":tokens["refresh"],
-            "access":tokens["refresh"]
+            "access":tokens["access"]
         },
         status=200
     )
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def profile(request):
+    data = UserService.get_profile(request.user)
+    return Response(
+        data,
+        status=200,
+    )
+
     
 
