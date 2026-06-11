@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from accounts.services.user_service import UserService
+from accounts.services.jwt_service import JWTService
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
@@ -46,12 +47,18 @@ def login(request):
             },
             status=401
         )
-    
+    tokens = JWTService.generate_tokens(user)
     return JsonResponse(
         {
             "message":"Login Successful",
-            "id":user.id,
-            "username":user.username
+            "user":{
+                "id":user.id,
+                "username":user.username,
+                "email":user.email,
+
+            },
+            "refresh":tokens["refresh"],
+            "access":tokens["refresh"]
         },
         status=200
     )
