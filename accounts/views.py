@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from accounts.services.user_service import UserService
 from accounts.services.jwt_service import JWTService
+from accounts.serializers.user_serializer import RegisterSerializer
 from django.http import JsonResponse
 from rest_framework.decorators import (
     api_view,
@@ -8,29 +9,23 @@ from rest_framework.decorators import (
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework import status
 import json
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
-@csrf_exempt
+@api_view(["POST"])
 def register(request):
-
-    if request.method!='POST':
-        return JsonResponse(
-            {
-                'message':'Invalid Request Method'
-            },
-            status=405,
-        )
     
-    data = json.loads(request.body)
-    user = UserService.register(data)
+    serializer = RegisterSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    user = UserService.register(serializer.validated_data)
     return JsonResponse(
         {
             'message':'User created successfully',
             'id':user.id,
         },
-        status=201,
+        status=status.HTTP_201_CREATED,
     )
 
 @csrf_exempt
