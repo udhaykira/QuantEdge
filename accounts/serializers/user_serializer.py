@@ -1,13 +1,34 @@
 from rest_framework import serializers
 from accounts.models import User
 
-class RegisterSerializer(serializers.Serializer):
-    username = serializers.CharField(max_length=100)
-    email = serializers.EmailField()
-    password = serializers.CharField(min_length=8)
+class UserSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        
+        model = User
+
+        fields = (
+            "id",
+            "username",
+            "email",
+            "password",
+        )
+        
+        read_only_fields = (
+            "id",
+        )
+
+        extra_kwargs = {
+            "password":{
+                "write_only":True,
+                "min_length":8,
+            }
+        }
+
 
     def validate_username(self,value):
-        if len(value.strip())==0:
+        value = value.strip()
+        if len(value)==0:
             raise serializers.ValidationError(
                 "Username cannot be empty"
             )
