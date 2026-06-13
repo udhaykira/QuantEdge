@@ -9,25 +9,30 @@ from rest_framework.decorators import (
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.generics import GenericAPIView
 from rest_framework import status
 import json
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
-@api_view(["POST"])
-def register(request):
-    
-    serializer = UserSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    user = UserService.register(serializer.validated_data)
-    response_serializer = UserSerializer(user)
-    return JsonResponse(
-        {
-            'message':'User created successfully',
-            'user':response_serializer.data,
-        },
-        status=status.HTTP_201_CREATED,
-    )
+class RegisterView(GenericAPIView):
+
+
+    serializer_class = UserSerializer
+
+    def post(self, request):
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = UserService.register(serializer.validated_data)
+        response_serializer = UserSerializer(user)
+        return Response(
+            {
+                'message':'User created successfully',
+                'user':response_serializer.data,
+            },
+            status=status.HTTP_201_CREATED,
+        )
 
 @csrf_exempt
 def login(request):
