@@ -25,3 +25,18 @@ class UserService:
     def get_profile(user):
         return user
     
+    @staticmethod
+    def update_profile(user,data):
+
+        if (user.phone_number != data["phone_number"]):
+            user.is_verified = False
+
+        user.username = data["username"]
+        user.email = data["email"]
+        user.phone_number = data["phone_number"]
+
+        user.save()
+
+        return user
+            
+        

@@ -17,10 +17,4 @@ class ProfileSerializer(serializers.ModelSerializer):
             "is_verified",
         )
 
-        read_only_fields = (
-            "id",
-            "username",
-            "email",
-            "phone_number",
-            "is_verified",
-        )
+        read_only_fields = fields
