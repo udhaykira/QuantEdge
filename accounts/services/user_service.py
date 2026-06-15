@@ -38,5 +38,17 @@ class UserService:
         user.save()
 
         return user
+    
+    @staticmethod
+    def change_password(user, data):
+        if not user.check_password(
+            data["current_password"]
+        ):
+            return False
+        
+        user.set_password(data["new_password"])
+        user.save()
+        
+        return user
             
         
