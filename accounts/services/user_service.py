@@ -1,5 +1,10 @@
 from accounts.models import User
 from django.contrib.auth import authenticate
+from rest_framework_simplejwt.tokens import (
+    RefreshToken,
+)
+from rest_framework.exceptions import ValidationError
+
 
 class UserService:
     
@@ -50,5 +55,22 @@ class UserService:
         user.save()
         
         return user
-            
+    
+    @staticmethod
+    def logout(
+        refresh,
+    ):
+
+        try:
+            token = RefreshToken(refresh)
+            token.blacklist()
+            return True
+
+        except Exception:
+            raise ValidationError(
+                {
+                    "message":
+                    "Invalid or already blacklisted refresh token."
+                }
+            )
         
