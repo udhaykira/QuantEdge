@@ -109,4 +109,36 @@ class UserService:
         user.save()
 
         return True
-            
+    
+    @staticmethod
+    def forgot_password(user, data):
+
+        if user.phone_number!=data["phone_number"]:
+            return "phone_number"
+
+        if not user.is_verified:
+            return "verified"
+
+        otp = "999999"
+
+        # Later:
+        # Store OTP
+        # Send SMS
+
+        return "success"
+    
+    def reset_password(user, data):
+        if user.phone_number!=data["phone_number"]:
+            return "phone_number"
+        if data["otp"] != "999999":
+            return "otp"
+        
+        user.set_password(
+            data["new_password"]
+        )
+
+        user.save()
+
+        return "success"
+
+                
