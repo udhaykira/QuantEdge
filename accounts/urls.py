@@ -10,6 +10,8 @@ from accounts.views import (
         LogoutView,
         SendOTPView,
         VerifyOTPView,
+        ForgotPasswordView,
+        ResetPasswordView,
     )
 
 urlpatterns = [
@@ -21,4 +23,7 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(), name="logout"),
     path("send-otp/",SendOTPView.as_view(),name="send-otp"),
     path("verify-otp/",VerifyOTPView.as_view(),name="verify-otp"),
+    path("forgot-password/",ForgotPasswordView.as_view(),name="forgot-password"),
+    path("reset-password/", ResetPasswordView.as_view(), name="reset-password"),
+
 ]

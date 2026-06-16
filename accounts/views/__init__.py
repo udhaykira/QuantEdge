@@ -5,3 +5,5 @@ from .change_password_view import ChangePasswordView
 from .logout_view import LogoutView
 from .send_otp_view import SendOTPView
 from .verify_otp_view import VerifyOTPView
+from .forgot_password_view import ForgotPasswordView
+from .reset_password_serializer import ResetPasswordView

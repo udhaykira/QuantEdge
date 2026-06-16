@@ -6,3 +6,5 @@ from .change_password_serializer import ChangePasswordSerializer
 from .logout_serializer import LogoutSerializer
 from .send_otp_serializer import SendOTPSerializer
 from .verify_otp_serializer import VerifyOTPSerializer
+from .forgot_password_serializer import ForgotPasswordSerializer
+from .reset_password_serializer import ResetPasswordSerializer
