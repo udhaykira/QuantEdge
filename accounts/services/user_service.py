@@ -73,4 +73,40 @@ class UserService:
                     "Invalid or already blacklisted refresh token."
                 }
             )
-        
+    
+    @staticmethod
+    def send_otp(user, data):
+        print(data)
+
+        user.phone_number = data["phone_number"]
+        user.save()
+
+        otp = "999999"
+
+        # Later:
+        # Store OTP
+        # Send SMS
+
+        return True
+    
+    @staticmethod
+    def verify_otp(
+        user,
+        data,
+    ):
+        if data["phone_number"]!=user.phone_number:
+            return False
+
+        if data["otp"] != "999999":
+            return False
+
+        user.phone_number = data[
+            "phone_number"
+        ]
+
+        user.is_verified = True
+
+        user.save()
+
+        return True
+            
